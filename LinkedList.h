@@ -12,12 +12,13 @@ struct Node {
     Node* next;
 };
 
-// Implementation of a singly linked list
+// Implementation of a singly linked list for Gale-Shapely algorithm
 template <typename T>
 class LinkedList : public ADT {
 private:
 
     Node<T>* head;
+    string identifier; //For identifying whose preference list it is
     u_int32_t size;
 
 public:
@@ -65,12 +66,19 @@ public:
 
     //Returns the type of the ADT
     string type();
+
+    //Returns the identifier of the list
+    string getID();
+
+    //Sets the identifier of the list
+    void setID(string id);
 };
 
 template <typename T>
 LinkedList<T>::LinkedList() {
     this->head = NULL;
     this->size = 0;
+    this->identifier = "";
 }
 
 template <typename T>
@@ -107,6 +115,12 @@ T LinkedList<T>::DeleteHead() {
 
 template <typename T>
 void LinkedList<T>::InsertTail(T payload) {
+
+    if(this->size == 0) {
+        this->InsertHead(payload);
+        return;
+    }
+
     Node<T>* iter = this->head;
 
     while(iter->next != NULL) {
@@ -285,4 +299,13 @@ string LinkedList<T>::type() {
     return "LinkedList";
 }
 
+template <typename T>
+string LinkedList<T>::getID() {
+    return this->identifier;
+}
+
+template <typename T>
+void LinkedList<T>::setID(string id) {
+    this->identifier = id;
+}
 #endif
